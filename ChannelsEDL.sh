@@ -2,8 +2,7 @@
 
 ### SET THIS VARIABLE ###
 #example: DVRFolder=/volume1/ShareFolders/Media/ChannelsDVR
-#DVRFolder=<enter your ChannelsDVR folder>
-DVRFolder=/Volumes/ShareFolders/Media/ChannelsDVR
+DVRFolder=<enter your ChannelsDVR folder>
 
 ### Don't run more than one at a time ###
 if [[ -f /tmp/ChannelsEDL ]]; then
@@ -28,7 +27,7 @@ for file in $(find "${COMSKIP}" -name video.log 2> /dev/null); do
   VIDEO=$(egrep "Mpeg:" "${file}" | egrep -v "video.mpg")
   VIDEO=${VIDEO:6}
   ### In case it's a remotely mounted source
-  VIDEO=$(echo ${VIDEO} | sed "s,${DVRFolder},${VIDEO},")
+  VIDEO=$(echo ${VIDEO} | sed "s,${VIDEO},${DVRFolder},")
   FULLPATH=$(dirname "${file}")
   FILENAME=$(basename "${file}")
   EDL="${VIDEO%.*}"
