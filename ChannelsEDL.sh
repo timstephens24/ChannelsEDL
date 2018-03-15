@@ -27,7 +27,7 @@ for file in $(find "${COMSKIP}" -name video.log 2> /dev/null); do
   VIDEO=$(egrep "Mpeg:" "${file}" | egrep -v "video.mpg")
   VIDEO=${VIDEO:6}
   if [[ "${VIDEO}" != *${DVRFolder}* ]]; then
-    VIDEO=$(echo $VIDEO | sed s,${DVRFolder},${VIDEO},)
+    VIDEO=$(echo $VIDEO | sed "s,${DVRFolder},${VIDEO},")
   fi
   FULLPATH=$(dirname "${file}")
   FILENAME=$(basename "${file}")
