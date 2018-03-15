@@ -12,9 +12,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 ChannelsDVR running on the system.
 
-### Installing
+## Running
 
-The only thing you need to do is change the first variable (DVRFolder) so the script knows where everything is located.
+To run, you need to just run this command:
+
+```
+bash ChannelsEDL.sh </full/path/to/ChannelsDVR>
+```
 
 ## Authors
 
