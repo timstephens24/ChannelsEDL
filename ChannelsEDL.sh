@@ -26,9 +26,8 @@ find "${TVFolder}" -type f -name *.edl -delete 2> /dev/null
 for file in $(find "${COMSKIP}" -name video.log 2> /dev/null); do
   VIDEO=$(egrep "Mpeg:" "${file}" | egrep -v "video.mpg")
   VIDEO=${VIDEO:6}
-  if [[ "${VIDEO}" != *${DVRFolder}* ]]; then
-    VIDEO=$(echo $VIDEO | sed "s,${DVRFolder},${VIDEO},")
-  fi
+  ### In case it's a remotely mounted source
+  VIDEO=$(echo ${VIDEO} | sed "s,${DVRFolder},${VIDEO},")
   FULLPATH=$(dirname "${file}")
   FILENAME=$(basename "${file}")
   EDL="${VIDEO%.*}"
