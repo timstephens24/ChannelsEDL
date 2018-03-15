@@ -2,7 +2,8 @@
 
 ### SET THIS VARIABLE ###
 #example: DVRFolder=/volume1/ShareFolders/Media/ChannelsDVR
-DVRFolder=<enter your ChannelsDVR folder>
+#DVRFolder=<enter your ChannelsDVR folder>
+DVRFolder=/Volumes/ShareFolders/Media/ChannelsDVR
 
 ### Don't run more than one at a time ###
 if [[ -f /tmp/ChannelsEDL ]]; then
