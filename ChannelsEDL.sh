@@ -24,10 +24,6 @@ COMSKIP="${DVRFolder}"/Logs/comskip
 TVFolder="${DVRFolder}"/TV
 MovieFolder="${DVRFolder}"/Movies
 
-### Remove all edl files ###
-find "${MovieFolder}" -type f -name *.edl -delete 2> /dev/null
-find "${TVFolder}" -type f -name *.edl -delete 2> /dev/null
-
 ### Get the EDL files and put then next to the video ###
 for file in $(find "${COMSKIP}" -name video.log 2> /dev/null); do
   VIDEO=$(egrep "Mpeg:" "${file}" | egrep -v "video.mpg")
