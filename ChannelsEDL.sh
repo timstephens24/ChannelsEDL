@@ -2,7 +2,8 @@
 
 ### SET THIS VARIABLE ###
 #example: DVRFolder=/volume1/ShareFolders/Media/ChannelsDVR
-DVRFolder=<enter your ChannelsDVR folder>
+#DVRFolder=<enter your ChannelsDVR folder>
+DVRFolder=/volume1/ShareFolders/Media/ChannelsDVR
 
 ### Don't run more than one at a time ###
 if [[ -f /tmp/ComSkipEDL ]]; then
@@ -33,7 +34,11 @@ for file in $(find "${COMSKIP}" -name video.log 2> /dev/null); do
     if [ -f "${VIDEO}" ]; then
       if [ ! -f "${EDL}".edl ]; then
         cp "${FULLPATH}"/video.edl "${EDL}".edl
-        sed -i "s,0$,3," "${EDL}".edl
+        if [[ $(uname -a) == *Darwin* ]]; then
+          sed -i "" "s,0$,3," "${EDL}".edl
+        else
+          sed -i "s,0$,3," "${EDL}".edl
+        fi
       fi
     fi
   fi
