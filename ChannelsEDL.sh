@@ -6,11 +6,11 @@
 DVRFolder=/volume1/ShareFolders/Media/ChannelsDVR
 
 ### Don't run more than one at a time ###
-if [[ -f /tmp/ComSkipEDL ]]; then
-  echo "The /tmp/ComSkipEDL file exists."
+if [[ -f /tmp/ChannelsEDL ]]; then
+  echo "The /tmp/ChannelsEDL file exists."
   exit
 else
-  touch /tmp/ComSkipEDL
+  touch /tmp/ChannelsEDL
 fi
 
 ### Set variables ###
@@ -27,22 +27,23 @@ find "${TVFolder}" -type f -name *.edl -delete 2> /dev/null
 for file in $(find "${COMSKIP}" -name video.log 2> /dev/null); do
   VIDEO=$(egrep "Mpeg:" "${file}" | egrep -v "video.mpg")
   VIDEO=${VIDEO:6}
-  if [[ "${VIDEO}" == *${DVRFolder}* ]]; then
-    FULLPATH=$(dirname "${file}")
-    FILENAME=$(basename "${file}")
-    EDL="${VIDEO%.*}"
-    if [ -f "${VIDEO}" ]; then
-      if [ ! -f "${EDL}".edl ]; then
-        cp "${FULLPATH}"/video.edl "${EDL}".edl
-        if [[ $(uname -a) == *Darwin* ]]; then
-          sed -i "" "s,0$,3," "${EDL}".edl
-        else
-          sed -i "s,0$,3," "${EDL}".edl
-        fi
+  if [[ "${VIDEO}" != *${DVRFolder}* ]]; then
+    VIDEO=$(echo $VIDEO | sed s,${DVRFolder},${VIDEO},)
+  fi
+  FULLPATH=$(dirname "${file}")
+  FILENAME=$(basename "${file}")
+  EDL="${VIDEO%.*}"
+  if [ -f "${VIDEO}" ]; then
+    if [ ! -f "${EDL}".edl ]; then
+      cp "${FULLPATH}"/video.edl "${EDL}".edl
+      if [[ $(uname -a) == *Darwin* ]]; then
+        sed -i "" "s,0$,3," "${EDL}".edl
+      else
+        sed -i "s,0$,3," "${EDL}".edl
       fi
     fi
   fi
 done
 
 ### Remove the lock file ###
-rm /tmp/ComSkipEDL
+rm /tmp/ChannelsEDL
