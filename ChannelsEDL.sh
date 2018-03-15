@@ -1,8 +1,15 @@
 #!/bin/bash
-
-### SET THIS VARIABLE ###
-#example: DVRFolder=/volume1/ShareFolders/Media/ChannelsDVR
-DVRFolder=<enter your ChannelsDVR folder>
+IFS=$'\n'
+if [[ ${1} == "" ]]; then
+    echo "You need to run this as following: "
+    echo "bash ChannelsEDL.sh </full/path/to/ChannelsDVR>"
+elif [[ ! -d ${1} ]]; then
+    echo "Your input was not a directory."
+elif [[ ! -d ${1}/Logs/comskip ]]; then
+    echo "The comskip log folder was not found. Please check the path you input."
+else
+    DVRFolder="${1}"
+fi
 
 ### Don't run more than one at a time ###
 if [[ -f /tmp/ChannelsEDL ]]; then
@@ -13,7 +20,6 @@ else
 fi
 
 ### Set variables ###
-IFS=$'\n'
 COMSKIP="${DVRFolder}"/Logs/comskip
 TVFolder="${DVRFolder}"/TV
 MovieFolder="${DVRFolder}"/Movies
@@ -26,8 +32,6 @@ find "${TVFolder}" -type f -name *.edl -delete 2> /dev/null
 for file in $(find "${COMSKIP}" -name video.log 2> /dev/null); do
   VIDEO=$(egrep "Mpeg:" "${file}" | egrep -v "video.mpg")
   VIDEO=${VIDEO:6}
-  ### In case it's a remotely mounted source
-  VIDEO=$(echo ${VIDEO} | sed "s,${VIDEO},${DVRFolder},")
   FULLPATH=$(dirname "${file}")
   FILENAME=$(basename "${file}")
   EDL="${VIDEO%.*}"
