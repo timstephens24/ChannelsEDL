@@ -11,12 +11,15 @@ BACKUPFOLDER=${CHANNELSFOLDER}/.trash
 
 ##### ----- Shouldn't need to change anything below here ----- #####
 
-########################################
-### MAKE FOLDERS IF THEY DON'T EXIST ###
-########################################
+########################
+### MORE ENVIRONMENT ###
+########################
+IFS=$'\n' # make newlines the only separator
+WORKINGFOLDER=${CHANNELSFOLDER}/.working
 if [ ! -d "${WORKINGFOLDER}" ]; then
   mkdir "${WORKINGFOLDER}"
 fi
+BACKUPFOLDER=${CHANNELSFOLDER}/.trash
 if [ ! -d "${BACKUPFOLDER}" ]; then
   mkdir "${BACKUPFOLDER}"
 fi
