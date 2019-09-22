@@ -3,11 +3,8 @@
 #############################
 ### SETUP THE ENVIRONMENT ###
 #############################
-IFS=$'\n' # make newlines the only separator
 CHANNELSFOLDER=/opt/ChannelsDVR
 FFMPEG_PATH=/opt/channels-dvr/latest/ffmpeg
-WORKINGFOLDER=${CHANNELSFOLDER}/.working
-BACKUPFOLDER=${CHANNELSFOLDER}/.trash
 
 ##### ----- Shouldn't need to change anything below here ----- #####
 
